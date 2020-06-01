@@ -110,7 +110,7 @@ class Word {
         }
     }
     this.exceptions.forEach(ex => {
-      conjugations[ex.plurality][ex.kasus] = this.article(kasus, plurality) + " " + ex.plural;
+      conjugations[Plurality.Plural][ex.kasus] = this.article(ex.kasus, Plurality.Plural) + " " + ex.form;
     });
 
     return conjugations;
@@ -146,7 +146,7 @@ const Dictionary = [
   new Word("Wald", "Wälder", Genders.Maskulin, 1), // confirm type
   new Word("Büro", "Büros", Genders.Neutrum, 6),
   new Word("Kolibri", "Kolibris", Genders.Maskulin, 6),
-  new Word("Datum", "Daten", Genders.Neutrum, 1), // confirm type
+  new Word("Datum", "Daten", Genders.Neutrum, 1, [{ kasus: Cases.Dativ, form: "Daten"}]), // confirm type
   new Word("Vater", "Väter", Genders.Maskulin, 1),
   new Word("Mutter", "Mütter", Genders.Feminin, 2),
   new Word("Pferd", "Pferde", Genders.Neutrum, 1),
