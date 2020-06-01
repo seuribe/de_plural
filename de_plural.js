@@ -68,20 +68,15 @@ class Word {
   }
 
   conjugations() {
-    var conjugations = {
-      [Plurality.Singular]: {
-        [Cases.Nominativ]: this.conjugate(Cases.Nominativ, Plurality.Singular),
-        [Cases.Akkusativ]: this.conjugate(Cases.Akkusativ, Plurality.Singular),
-        [Cases.Dativ]: this.conjugate(Cases.Dativ, Plurality.Singular),
-        [Cases.Genitiv]: this.conjugate(Cases.Genitiv, Plurality.Singular),
-      },
-      [Plurality.Plural]: {
-        [Cases.Nominativ]: this.conjugate(Cases.Nominativ, Plurality.Plural),
-        [Cases.Akkusativ]: this.conjugate(Cases.Akkusativ, Plurality.Plural),
-        [Cases.Dativ]: this.conjugate(Cases.Dativ, Plurality.Plural),
-        [Cases.Genitiv]: this.conjugate(Cases.Genitiv, Plurality.Plural),
+
+    var conjugations = {};
+    for (const number of Object.values(Plurality)) {
+      conjugations[number] = {};
+      for (const kasus of Object.values(Cases)) {
+        conjugations[number][kasus] = this.conjugate(kasus, number);
       }
-    };
+    }
+
     switch (this.type) {
       case 1: {
         conjugations[Plurality.Singular][Cases.Genitiv] += "s";
@@ -109,6 +104,7 @@ class Word {
           break;
         }
     }
+
     this.exceptions.forEach(ex => {
       conjugations[Plurality.Plural][ex.kasus] = this.article(ex.kasus, Plurality.Plural) + " " + ex.form;
     });
