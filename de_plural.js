@@ -47,23 +47,30 @@ const PluralArticles = Object.freeze({
 })
 
 class Word {
-  constructor(singular, plural, gender, type) {
+  constructor(singular, plural, gender, type, exceptions = []) {
     this.singular = singular;
     this.plural = plural;
     this.gender = gender;
     this.type = type;
+    this.exceptions = exceptions;
   }
 
   article(kasus, number) {
     return (number == Plurality.Singular) ? SingularArticles[this.gender][kasus] : PluralArticles[kasus]
   }
 
-  conjugations() {
-    var conjugations;
+  conjugate(plurality, kasus) {
+    return this.article(kasus, plurality) + " " + this.inNumber(plurality);
+  }
 
+  inNumber(plurality) {
+    return ((plurality == Plurality.singular) ? this.singular : this.plural);
+  }
+
+  conjugations() {
     var conjugations = {
       [Plurality.Singular]: {
-        [Cases.Nominativ]: this.article(Cases.Nominativ, Plurality.Singular) + " " + this.singular,
+        [Cases.Nominativ]: this.conjugate(Cases.Nominativ, Plurality.Singular),
         [Cases.Akkusativ]: this.article(Cases.Akkusativ, Plurality.Singular) + " " + this.singular,
         [Cases.Dativ]: this.article(Cases.Dativ, Plurality.Singular) + " " + this.singular,
         [Cases.Genitiv]: this.article(Cases.Genitiv, Plurality.Singular) + " " + this.singular,
@@ -102,6 +109,10 @@ class Word {
           break;
         }
     }
+    this.exceptions.forEach(ex => {
+      conjugations[ex.plurality][ex.kasus] = this.article(kasus, plurality) + " " + ex.plural;
+    });
+
     return conjugations;
   }
 }
