@@ -129,7 +129,7 @@ const Dictionary = [
   new Word("Komma", "Kommas", Genders.Neutrum, 6),
 
   new Word("Bahn", "Bahnen", Genders.Feminin, 2),
-  new Word("Amt", "Amter", Genders.Neutrum, 4),
+  new Word("Amt", "Ämter", Genders.Neutrum, 4),
   new Word("Wort", "Wörter", Genders.Neutrum, 4),
   new Word("Messe", "Messen", Genders.Feminin, 2),
   new Word("Spiel", "Spiele", Genders.Neutrum, 1),
