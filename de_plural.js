@@ -59,27 +59,27 @@ class Word {
     return (number == Plurality.Singular) ? SingularArticles[this.gender][kasus] : PluralArticles[kasus]
   }
 
-  conjugate(plurality, kasus) {
-    return this.article(kasus, plurality) + " " + this.inNumber(plurality);
+  conjugate(kasus, number) {
+    return this.article(kasus, number) + " " + this.inNumber(number);
   }
 
-  inNumber(plurality) {
-    return ((plurality == Plurality.singular) ? this.singular : this.plural);
+  inNumber(number) {
+    return ((number == Plurality.Singular) ? this.singular : this.plural);
   }
 
   conjugations() {
     var conjugations = {
       [Plurality.Singular]: {
         [Cases.Nominativ]: this.conjugate(Cases.Nominativ, Plurality.Singular),
-        [Cases.Akkusativ]: this.article(Cases.Akkusativ, Plurality.Singular) + " " + this.singular,
-        [Cases.Dativ]: this.article(Cases.Dativ, Plurality.Singular) + " " + this.singular,
-        [Cases.Genitiv]: this.article(Cases.Genitiv, Plurality.Singular) + " " + this.singular,
+        [Cases.Akkusativ]: this.conjugate(Cases.Akkusativ, Plurality.Singular),
+        [Cases.Dativ]: this.conjugate(Cases.Dativ, Plurality.Singular),
+        [Cases.Genitiv]: this.conjugate(Cases.Genitiv, Plurality.Singular),
       },
       [Plurality.Plural]: {
-        [Cases.Nominativ]: this.article(Cases.Nominativ, Plurality.Plural) + " " + this.plural,
-        [Cases.Akkusativ]: this.article(Cases.Akkusativ, Plurality.Plural) + " " + this.plural,
-        [Cases.Dativ]: this.article(Cases.Dativ, Plurality.Plural) + " " + this.plural,
-        [Cases.Genitiv]: this.article(Cases.Genitiv, Plurality.Plural) + " " + this.plural,
+        [Cases.Nominativ]: this.conjugate(Cases.Nominativ, Plurality.Plural),
+        [Cases.Akkusativ]: this.conjugate(Cases.Akkusativ, Plurality.Plural),
+        [Cases.Dativ]: this.conjugate(Cases.Dativ, Plurality.Plural),
+        [Cases.Genitiv]: this.conjugate(Cases.Genitiv, Plurality.Plural),
       }
     };
     switch (this.type) {
