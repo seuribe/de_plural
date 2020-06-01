@@ -1,0 +1,53 @@
+.original_word {
+  text-transform: uppercase;
+  color: rgb(71, 12, 78);
+  font-weight: bold;
+}
+
+.correct {
+  color: black;
+}
+
+.incorrect {
+  color: rgb(187, 0, 0);
+}
+
+#genus_buttons {
+  display: inline;
+}
+
+#main {
+  margin: 2vw;
+  padding: 1em;
+}
+
+.button_bar {
+  text-align: center;
+  background-color: #404040;
+  padding: 0.25em;
+}
+
+body {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 1em;
+}
+
+button {
+  background-color: #F0e070;
+  border: 0;
+  padding: 0.25em;
+  border-radius: 0.2em;
+  font-size: 1.1em;
+}
+
+button:hover {
+  background-color: black;
+  color: #F0e070;
+}
+
+input {
+  background-color: #FFFFF0;
+  border: 1px solid grey;
+  padding: 0.25em;
+  font-size: 1.1em;
+}

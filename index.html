@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Konjugationen und Plural</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="default.css" media="all" type="text/css">
+  </head>
+  <body>
+    <script src="de_plural.js"></script>
+    <div id="main">
+      <h1>Konjugationen und Plural</h1>
+      Wort: <span class="original_word" id="word"></span><br>
+    Typ: <span class="original_word" id="type"></span><br>
+    Genus: <span class="original_word" id="genus"></span>
+    <div id="genus_buttons">
+      <button onclick="checkGender(Genders.Maskulin);">Maskuline</button>
+      <button onclick="checkGender(Genders.Feminin);">Feminin</button>
+      <button onclick="checkGender(Genders.Neutrum);">Neutrum</button>
+    </div>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th></th><th>Singular</th><th>Plural</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Nominative</td><td><input id="nom_singular" type="text"></td><td><input id="nom_plural" type="text"></td>
+        <td><button onclick="check([Cases.Nominativ]);">Check</button></td>
+      </tr>
+      <tr>
+        <td></td><td><span id="nom_singular_answer"></span></td><td><span id="nom_plural_answer"></span></td>
+      </tr>
+      <tr>
+        <td>Akkusativ</td><td><input id="akk_singular" type="text"></td><td><input id="akk_plural" type="text"></td>
+      </tr>
+      <tr>
+        <td></td><td><span id="akk_singular_answer"></span></td><td><span id="akk_plural_answer"></span></td>
+      </tr>
+      <tr>
+        <td>Dativ</td><td><input id="dat_singular" type="text"></td><td><input id="dat_plural" type="text"></td>
+      </tr>
+      <tr>
+        <td></td><td><span id="dat_singular_answer"></span></td><td><span id="dat_plural_answer"></span></td>
+      </tr>
+      <tr>
+        <td>Genitiv</td><td><input id="gen_singular" type="text"></td><td><input id="gen_plural" type="text"></td>
+      </tr>
+      <tr>
+        <td></td><td><span id="gen_singular_answer"></span></td><td><span id="gen_plural_answer"></span></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td class="button_bar" colspan="4">
+          <button onclick="check(Object.values(Cases))">Prüfen</button>
+          <button onclick="newWord()">Neues Wort!</button>
+        </td>
+      </tr>
+    </tfoot>
+    </table>
+  <script>
+
+    var word;
+    var conjugations;
+
+    const CasePrefix = {
+      [Cases.Nominativ]: "nom",
+      [Cases.Akkusativ]: "akk",
+      [Cases.Dativ]: "dat",
+      [Cases.Genitiv]: "gen"
+    };
+    const NumberPostfix = {
+      [Plurality.Singular]: "singular",
+      [Plurality.Plural]: "plural"
+    };
+
+    function checkAnswer(kasus, number) {
+      const inputId = CasePrefix[kasus] + "_" + NumberPostfix[number];
+      const userInput = document.getElementById(inputId).value;
+      const answer = conjugations[number][kasus];
+      const answerField = document.getElementById(inputId + "_answer");
+      document.getElementById("type").innerText = word.type;
+
+      answerField.innerText = answer;
+      if (answer != userInput)
+        answerField.classList.add("incorrect");
+      else
+        answerField.classList.remove("incorrect");
+    }
+
+    function clearConjugation(kasus, number) {
+      const inputId = CasePrefix[kasus] + "_" + NumberPostfix[number];
+      const answerField = document.getElementById(inputId + "_answer");
+      document.getElementById(inputId).value = "";
+      answerField.innerText = "";
+      answerField.classList.remove("incorrect");
+    }
+
+    function genderName(gender) {
+      return (gender == Genders.Feminin) ? "Feminin" :
+             (gender == Genders.Maskulin) ? "Maskulin":
+             "Neutrum";
+    }
+
+    function checkGender(gender) {
+      const genusElement = document.getElementById("genus");
+      document.getElementById("genus_buttons").style.visibility = 'hidden';
+      genusElement.innerHTML = genderName(word.gender);
+      if (gender != word.gender) {
+        genusElement.classList.add('incorrect');
+      }
+    }
+
+    function newWord() {
+      word = Dictionary[ Math.floor((Math.random() * (Dictionary.length - 1)) + 1) ];
+      conjugations = word.conjugations();
+      document.getElementById("word").innerText = word.singular;
+      document.getElementById("type").innerText = "";
+      document.getElementById("genus").innerHTML = "";
+      document.getElementById("genus").classList.remove('incorrect');
+      document.getElementById("genus_buttons").style.visibility = 'visible';
+
+      for (const kasus of Object.values(Cases)) {
+        for (const number of Object.values(Plurality)) {
+          clearConjugation(kasus, number);
+        }
+      }
+    }
+
+    function check(kasusList) {
+      var text = "";
+      for (const kasus of kasusList) {
+        for (const number of Object.values(Plurality)) {
+          checkAnswer(kasus, number);
+        }
+      }
+      checkGender(word.gender);
+      document.getElementById("type").innerText = word.type;
+    }
+
+    newWord();
+
+  </script>
+  </div>
+  </body>
+</html>
