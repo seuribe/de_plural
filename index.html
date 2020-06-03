@@ -115,7 +115,7 @@
     }
 
     function newWord() {
-      word = Dictionary[ Math.floor((Math.random() * (Dictionary.length - 1)) + 1) ];
+      word = Dictionary[ Math.floor(Math.random() * Dictionary.length) ];
       conjugations = word.conjugations();
       document.getElementById("word").innerText = word.singular;
       document.getElementById("type").innerText = "";
