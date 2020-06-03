@@ -48,7 +48,7 @@ const Dictionary = [
   new Word("Wand", "Wände", Genders.Feminin, 5),
   new Word("Runde", "Runden", Genders.Feminin, 1),
   new Word("Beere", "Beeren", Genders.Feminin, 1),
-  new Word("Farbe", "Farben", Genders.Feminin, 1),
+  new Word("Farbe", "Farben", Genders.Feminin, 2),
   new Word("Bier", "Biere", Genders.Neutrum, 1),
   new Word("Stück", "Stücke", Genders.Neutrum, 1),
   new Word("Zimmer", "Zimmer", Genders.Neutrum, 1),
