@@ -83,9 +83,11 @@ class Word {
         break;
       }
       case 3: {
-        conjugations[Plurality.Singular][Cases.Genitiv] += "en";
-        conjugations[Plurality.Singular][Cases.Dativ] += "en";
-        conjugations[Plurality.Singular][Cases.Akkusativ] += "en";
+        const postfix = this.singular.charAt(this.singular.length - 1) == "e" ? "n" : "en";
+
+        conjugations[Plurality.Singular][Cases.Genitiv] += postfix;
+        conjugations[Plurality.Singular][Cases.Dativ] += postfix;
+        conjugations[Plurality.Singular][Cases.Akkusativ] += postfix;
         break;
       }
       case 4: {
