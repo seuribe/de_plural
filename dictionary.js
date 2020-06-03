@@ -66,4 +66,10 @@ const Dictionary = [
   new Word("Oma", "Omas", Genders.Feminin, 6),
   new Word("Land", "Länder", Genders.Neutrum, 4),
   new Word("Haus", "Häuser", Genders.Neutrum, 4),
+  new Word("Bett", "Betten", Genders.Neutrum, 6),
+  new Word("Instrument", "Instrumente", Genders.Neutrum, 1),
+  new Word("Blau", "Blau", Genders.Neutrum, 6),
+  new Word("Spanisch", "Spanisch", Genders.Neutrum, 6),
+  
+
 ];
