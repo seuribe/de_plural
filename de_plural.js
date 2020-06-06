@@ -45,7 +45,7 @@ const PluralArticles = Object.freeze({
   [Cases.Genitiv]: "der"
 })
 
-class Word {
+class Noun {
   constructor(singular, plural, gender, type, exceptions = []) {
     this.singular = singular;
     this.plural = plural;
