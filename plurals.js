@@ -68,7 +68,6 @@
   }
 
   function check(kasusList) {
-    var text = "";
     for (const kasus of kasusList) {
       for (const number of Object.values(Plurality)) {
         checkAnswer(kasus, number);
