@@ -2,7 +2,8 @@
 const Genders = Object.freeze({
   Maskulin: 1,
   Neutrum: 2,
-  Feminin: 3
+  Feminin: 3,
+  Plural: 4
 });
 
 const Cases = Object.freeze({
@@ -17,7 +18,7 @@ const Plurality = Object.freeze({
   Plural: 2
 });
 
-const SingularArticles = Object.freeze({
+const DefiniteArticles = Object.freeze({
   [Genders.Maskulin]: {
     [Cases.Nominativ]: "der",
     [Cases.Akkusativ]: "den",
@@ -35,15 +36,14 @@ const SingularArticles = Object.freeze({
     [Cases.Akkusativ]: "die",
     [Cases.Dativ]: "der",
     [Cases.Genitiv]: "der"
+  },
+  [Genders.Plural]: {
+    [Cases.Nominativ]: "die",
+    [Cases.Akkusativ]: "die",
+    [Cases.Dativ]: "den",
+    [Cases.Genitiv]: "der"
   }
 });
-
-const PluralArticles = Object.freeze({
-  [Cases.Nominativ]: "die",
-  [Cases.Akkusativ]: "die",
-  [Cases.Dativ]: "den",
-  [Cases.Genitiv]: "der"
-})
 
 class Noun {
   constructor(singular, plural, gender, type, exceptions = []) {
@@ -55,7 +55,7 @@ class Noun {
   }
 
   article(kasus, number) {
-    return (number == Plurality.Singular) ? SingularArticles[this.gender][kasus] : PluralArticles[kasus]
+    return (number == Plurality.Singular) ? DefiniteArticles[this.gender][kasus] : DefiniteArticles[Genders.Plural][kasus]
   }
 
   conjugate(kasus, number) {
