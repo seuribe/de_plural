@@ -74,10 +74,11 @@ const Dictionary = [
 
 ];
 
-const Adjectives = [
-  new Adjektiv("groß"),
-  new Adjektiv("schön")
-];
+function createAdjectives() {
+  return Array.from(arguments).map( rootForm => new Adjektiv(rootForm) );
+}
+
+const Adjectives = createAdjectives("groß", "schön", "heiß", "neu", "gut", "schlecht");
 
 function randomAdjective() {
   return Adjectives[Math.floor(Math.random() * Adjectives.length)];
