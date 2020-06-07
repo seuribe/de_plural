@@ -10,23 +10,18 @@
     <script src="dictionary.js"></script>
     <script src="adjectives.js"></script>
     <script>
-      function addInputRow(name, prefix) {
+      function addRow(tag, name, prefix, postfix, values) {
         document.write(`<tr><td>${name}</td>`);
-        for (const gender of Object.values(Genders)) {
-          document.write(`<td><input id="${prefix}_${GenderPostfix[gender]}" type="text"></td>`);
+          for (const value of values) {
+          document.write(`<td><${tag} id="${prefix}${value}${postfix}" type="text"></${tag}></td>`);
         }
         document.write("</tr>");
       }
-      function addAnswerRow(name, prefix) {
-        document.write(`<tr><td></td>`);
-        for (const gender of Object.values(Genders)) {
-          document.write(`<td><span id="${prefix}_${GenderPostfix[gender]}_answer"></span></td>`);
-        }
-        document.write("</tr>");
-      }
+
       function addCaseRow(name, prefix) {
-        addInputRow(name, prefix);
-        addAnswerRow(name, prefix);
+        const postfixes = Object.values(Genders).map( gender => GenderPostfix[gender] );
+        addRow("input", name, prefix+"_", "", postfixes);
+        addRow("span", "", prefix+"_", "_answer", postfixes);
       }
     </script>
 
