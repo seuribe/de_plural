@@ -73,3 +73,12 @@ const Dictionary = [
   
 
 ];
+
+const Adjectives = [
+  new Adjektiv("groß"),
+  new Adjektiv("schön")
+];
+
+function randomAdjective() {
+  return Adjectives[Math.floor(Math.random() * Adjectives.length)];
+}

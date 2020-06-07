@@ -45,6 +45,44 @@ const DefiniteArticles = Object.freeze({
   }
 });
 
+
+const IndefiniteArticles = Object.freeze({
+  [Genders.Maskulin]: {
+    [Cases.Nominativ]: "ein",
+    [Cases.Akkusativ]: "einen",
+    [Cases.Dativ]: "einem",
+    [Cases.Genitiv]: "eines"
+  },
+  [Genders.Neutrum]: {
+    [Cases.Nominativ]: "ein",
+    [Cases.Akkusativ]: "ein",
+    [Cases.Dativ]: "einem",
+    [Cases.Genitiv]: "eines"
+  },
+  [Genders.Feminin]: {
+    [Cases.Nominativ]: "eine",
+    [Cases.Akkusativ]: "eine",
+    [Cases.Dativ]: "einer",
+    [Cases.Genitiv]: "einer"
+  },
+  [Genders.Plural]: {
+    [Cases.Nominativ]: "",
+    [Cases.Akkusativ]: "",
+    [Cases.Dativ]: "",
+    [Cases.Genitiv]: ""
+  }
+});
+
+function definiteArticle(gender, kasus) {
+  return DefiniteArticles[gender][kasus];
+}
+
+function indefiniteArticle(gender, kasus) {
+  if (gender == Genders.Plural)
+    return undefined;
+  return IndefiniteArticles[gender][kasus];
+}
+
 class Noun {
   constructor(singular, plural, gender, type, exceptions = []) {
     this.singular = singular;
@@ -111,5 +149,93 @@ class Noun {
     });
 
     return conjugations;
+  }
+}
+
+const AdjektivDeclensionType = Object.freeze({
+  Bestimmter: 1,
+  Unbestimmter: 2,
+  Ohne: 3
+});
+
+const AdjektivDeclensionPostFix = Object.freeze({
+  [AdjektivDeclensionType.Bestimmter]: {
+    [Cases.Nominativ]: {
+      [Genders.Maskulin]: "e", [Genders.Feminin]: "e", [Genders.Neutrum]: "e", [Genders.Plural]: "en"
+    },
+    [Cases.Akkusativ]: {
+      [Genders.Maskulin]: "en", [Genders.Feminin]: "e", [Genders.Neutrum]: "e", [Genders.Plural]: "en"
+    },
+    [Cases.Dativ]: {
+      [Genders.Maskulin]: "en", [Genders.Feminin]: "en", [Genders.Neutrum]: "en", [Genders.Plural]: "en"
+    },
+    [Cases.Genitiv]: {
+      [Genders.Maskulin]: "en", [Genders.Feminin]: "en", [Genders.Neutrum]: "en", [Genders.Plural]: "en"
+    },
+  },
+  [AdjektivDeclensionType.Unbestimmter]: {
+    [Cases.Nominativ]: {
+      [Genders.Maskulin]: "er", [Genders.Feminin]: "e", [Genders.Neutrum]: "es", [Genders.Plural]: "e"
+    },
+    [Cases.Akkusativ]: {
+      [Genders.Maskulin]: "en", [Genders.Feminin]: "e", [Genders.Neutrum]: "es", [Genders.Plural]: "e"
+    },
+    [Cases.Dativ]: {
+      [Genders.Maskulin]: "en", [Genders.Feminin]: "en", [Genders.Neutrum]: "en", [Genders.Plural]: "en"
+    },
+    [Cases.Genitiv]: {
+      [Genders.Maskulin]: "en", [Genders.Feminin]: "en", [Genders.Neutrum]: "en", [Genders.Plural]: "en"
+    },
+  },
+  [AdjektivDeclensionType.Ohne]: {
+    [Cases.Nominativ]: {
+      [Genders.Maskulin]: "er", [Genders.Feminin]: "e", [Genders.Neutrum]: "es", [Genders.Plural]: "e"
+    },
+    [Cases.Akkusativ]: {
+      [Genders.Maskulin]: "en", [Genders.Feminin]: "e", [Genders.Neutrum]: "es", [Genders.Plural]: "e"
+    },
+    [Cases.Dativ]: {
+      [Genders.Maskulin]: "em", [Genders.Feminin]: "er", [Genders.Neutrum]: "em", [Genders.Plural]: "en"
+    },
+    [Cases.Genitiv]: {
+      [Genders.Maskulin]: "en", [Genders.Feminin]: "er", [Genders.Neutrum]: "en", [Genders.Plural]: "er"
+    },
+  },
+});
+
+class Adjektiv {
+  constructor(rootForm) {
+    this.rootForm = rootForm;
+  }
+
+  decline(type, gender, kasus) {
+    const declined = this.rootForm + AdjektivDeclensionPostFix[type][kasus][gender];
+
+    switch (type) {
+      case AdjektivDeclensionType.Bestimmter:
+        return definiteArticle(gender, kasus) + " " + declined;
+      case AdjektivDeclensionType.Unbestimmter:
+        if (gender == Genders.Plural)
+          return declined;
+        return indefiniteArticle(gender, kasus) + " " + declined;
+      case AdjektivDeclensionType.Ohne:
+        return declined;
+    }
+  }
+
+  declensions() {
+    var declensions = {};
+    for (const type of Object.keys(AdjektivDeclensionPostFix)) {
+      declensions[type] = {};
+
+      for (const kasus of (Object.keys(AdjektivDeclensionPostFix[type]))) {
+        declensions[type][kasus] = {};
+        for (const gender of Object.keys(AdjektivDeclensionPostFix[type][kasus])) {
+          const value = AdjektivDeclensionPostFix[type][kasus][gender];
+          declensions[type][kasus][gender] = this.decline(type, gender, kasus);
+        }
+      }
+    }
+    return declensions;
   }
 }
