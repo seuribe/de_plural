@@ -1,8 +1,8 @@
 
 const Genders = Object.freeze({
   Maskulin: 1,
-  Neutrum: 2,
-  Feminin: 3,
+  Feminin: 2,
+  Neutrum: 3,
   Plural: 4
 });
 
