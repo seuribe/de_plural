@@ -66,10 +66,10 @@ const IndefiniteArticles = Object.freeze({
     [Cases.Genitiv]: "einer"
   },
   [Genders.Plural]: {
-    [Cases.Nominativ]: "",
-    [Cases.Akkusativ]: "",
-    [Cases.Dativ]: "",
-    [Cases.Genitiv]: ""
+    [Cases.Nominativ]: undefined,
+    [Cases.Akkusativ]: undefined,
+    [Cases.Dativ]: undefined,
+    [Cases.Genitiv]: undefined
   }
 });
 
@@ -78,8 +78,6 @@ function definiteArticle(gender, kasus) {
 }
 
 function indefiniteArticle(gender, kasus) {
-  if (gender == Genders.Plural)
-    return undefined;
   return IndefiniteArticles[gender][kasus];
 }
 
