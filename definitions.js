@@ -225,13 +225,12 @@ class Adjektiv {
 
   declensions() {
     var declensions = {};
-    for (const type of Object.keys(AdjektivDeclensionPostFix)) {
+    for (const type of Object.values(AdjektivDeclensionType)) {
       declensions[type] = {};
 
-      for (const kasus of (Object.keys(AdjektivDeclensionPostFix[type]))) {
+      for (const kasus of Object.values(Cases)) {
         declensions[type][kasus] = {};
-        for (const gender of Object.keys(AdjektivDeclensionPostFix[type][kasus])) {
-          const value = AdjektivDeclensionPostFix[type][kasus][gender];
+        for (const gender of Object.values(Genders)) {
           declensions[type][kasus][gender] = this.decline(type, gender, kasus);
         }
       }

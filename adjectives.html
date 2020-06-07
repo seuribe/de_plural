@@ -12,15 +12,15 @@
     <script>
       function addInputRow(name, prefix) {
         document.write(`<tr><td>${name}</td>`);
-        for (const postfix of Object.values(GenderPostfix)) {
-          document.write(`<td><input id="${prefix}_${postfix}" type="text"></td>`);
+        for (const gender of Object.values(Genders)) {
+          document.write(`<td><input id="${prefix}_${GenderPostfix[gender]}" type="text"></td>`);
         }
         document.write("</tr>");
       }
       function addAnswerRow(name, prefix) {
         document.write(`<tr><td></td>`);
-        for (const postfix of Object.values(GenderPostfix)) {
-          document.write(`<td><span id="${prefix}_${postfix}_answer"></span></td>`);
+        for (const gender of Object.values(Genders)) {
+          document.write(`<td><span id="${prefix}_${GenderPostfix[gender]}_answer"></span></td>`);
         }
         document.write("</tr>");
       }
@@ -33,6 +33,7 @@
     <div id="main">
       <h1>Deklination der Adjektive</h1>
       Adjektiv: <span class="original_word" id="adjective"></span><br>
+      Type: <span class="original_word" id="type"></span><br>
     <br>
     <table>
       <thead>

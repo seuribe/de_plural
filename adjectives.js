@@ -1,84 +1,67 @@
 
+var adjective;
+var declensions;
+var type;
 
-  var adjective;
+const CasePrefix = {
+  [Cases.Nominativ]: "nom",
+  [Cases.Akkusativ]: "akk",
+  [Cases.Dativ]: "dat",
+  [Cases.Genitiv]: "gen"
+};
+const GenderPostfix = {
+  [Genders.Maskulin]: "mas",
+  [Genders.Feminin]: "fem",
+  [Genders.Neutrum]: "neu",
+  [Genders.Plural]: "plu"
+};
 
-  const CasePrefix = {
-    [Cases.Nominativ]: "nom",
-    [Cases.Akkusativ]: "akk",
-    [Cases.Dativ]: "dat",
-    [Cases.Genitiv]: "gen"
-  };
-  const GenderPostfix = {
-    [Genders.Maskulin]: "mas",
-    [Genders.Feminin]: "fem",
-    [Genders.Neutrum]: "neu",
-    [Genders.Plural]: "plu"
-  };
+function checkAnswer(type, kasus, gender) {
+  const inputId = CasePrefix[kasus] + "_" + GenderPostfix[gender];
+  const userInput = document.getElementById(inputId).value;
+  const answer = declensions[type][kasus][gender];
+  const answerField = document.getElementById(inputId + "_answer");
 
-  function checkAnswer(kasus, number) {
-    const inputId = CasePrefix[kasus] + "_" + NumberPostfix[number];
-    const userInput = document.getElementById(inputId).value;
-    const answer = conjugations[number][kasus];
-    const answerField = document.getElementById(inputId + "_answer");
-    document.getElementById("type").innerText = word.type;
-
-    answerField.innerText = answer;
-    if (answer != userInput)
-      answerField.classList.add("incorrect");
-    else
-      answerField.classList.remove("incorrect");
-  }
-
-  function clearConjugation(kasus, number) {
-    const inputId = CasePrefix[kasus] + "_" + NumberPostfix[number];
-    const answerField = document.getElementById(inputId + "_answer");
-    document.getElementById(inputId).value = "";
-    answerField.innerText = "";
+  answerField.innerText = answer;
+  if (answer != userInput)
+    answerField.classList.add("incorrect");
+  else
     answerField.classList.remove("incorrect");
-  }
+}
 
-  function genderName(gender) {
-    return (gender == Genders.Feminin) ? "Feminin" :
-            (gender == Genders.Maskulin) ? "Maskulin":
-            "Neutrum";
-  }
+function clearConjugation(kasus, gender) {
+  const inputId = CasePrefix[kasus] + "_" + GenderPostfix[gender];
+  const answerField = document.getElementById(inputId + "_answer");
+  document.getElementById(inputId).value = "";
+  answerField.innerText = "";
+  answerField.classList.remove("incorrect");
+}
 
-  function checkGender(gender) {
-    const genusElement = document.getElementById("genus");
-    document.getElementById("genus_buttons").style.visibility = 'hidden';
-    genusElement.innerHTML = genderName(word.gender);
-    if (gender != word.gender) {
-      genusElement.classList.add('incorrect');
+function check(kasusList) {
+  for (const kasus of kasusList) {
+    for (const gender of Object.values(Genders)) {
+      checkAnswer(AdjektivDeclensionType[type], kasus, gender);
     }
   }
+}
 
-  function newWord() {
-/*    
-    word = Dictionary[ Math.floor(Math.random() * Dictionary.length) ];
-    conjugations = word.conjugations();
-    document.getElementById("word").innerText = word.singular;
-    document.getElementById("type").innerText = "";
-    document.getElementById("genus").innerHTML = "";
-    document.getElementById("genus").classList.remove('incorrect');
-    document.getElementById("genus_buttons").style.visibility = 'visible';
+function randomAdjectiveDeclentionType() {
+  const types = Object.keys(AdjektivDeclensionType);
+  return types[Math.floor(Math.random() * types.length)];
+}
 
-    for (const kasus of Object.values(Cases)) {
-      for (const number of Object.values(Plurality)) {
-        clearConjugation(kasus, number);
-      }
+function newWord() {
+  adjective = randomAdjective();
+  declensions = adjective.declensions();
+  type = randomAdjectiveDeclentionType();
+ 
+  document.getElementById("adjective").innerText = adjective.rootForm;
+  document.getElementById("type").innerText = type;
+
+  for (const kasus of Object.values(Cases)) {
+    for (const gender of Object.values(Genders)) {
+      clearConjugation(kasus, gender);
     }
-*/    
   }
+}
 
-  function check(kasusList) {
-    for (const kasus of kasusList) {
-      for (const number of Object.values(Plurality)) {
-        checkAnswer(kasus, number);
-      }
-    }
-    checkGender(word.gender);
-    document.getElementById("type").innerText = word.type;
-  }
-
-  var adjective = randomAdjective();
-  console.log(adjective.declensions());
