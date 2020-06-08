@@ -13,11 +13,19 @@ const NumberPostfix = {
 };
 
 Vue.component('checked-input', {
-  props: ['expected', 'show'],
+  props: ['expected', 'show', 'bus'],
   data: function() {
     return {
       input: "",
     }
+  },
+  methods: {
+    clear: function() {
+      this.input = "";
+    }
+  },
+  mounted() {
+    this.bus.$on('clear', this.clear);
   },
   template: `<div>
                <input v-model="input" type="text"></input>
@@ -27,15 +35,15 @@ Vue.component('checked-input', {
 });
 
 Vue.component('checked-case', {
-  props: ['kasus', 'conjugations', 'show'],
+  props: ['kasus', 'conjugations', 'show', 'bus'],
   data: function() {
     return {
     }
   },
   template:`<div class="row">
               <div class="rowhead">{{ kasus }}</div>
-              <div class="inputcell"><checked-input v-bind:expected="conjugations['Singular'][kasus]" v-bind:show="show"></checked-input></div>
-              <div class="inputcell"><checked-input v-bind:expected="conjugations['Plural'][kasus]" v-bind:show="show"></checked-input></div>
+              <div class="inputcell"><checked-input v-bind:bus="bus" v-bind:expected="conjugations['Singular'][kasus]" v-bind:show="show"></checked-input></div>
+              <div class="inputcell"><checked-input v-bind:bus="bus" v-bind:expected="conjugations['Plural'][kasus]" v-bind:show="show"></checked-input></div>
               <div class="buttoncell"><button v-on:click="show = !show">{{ (show ? "Hide" : "Check") }}</button></div>
             </div>`
 });
@@ -51,7 +59,8 @@ var app = new Vue({
     show_answers: false,
     reveal_type: false,
     reveal_gender: false,
-    reveal_gender_buttons: true
+    reveal_gender_buttons: true,
+    bus: new Vue()
   },
 
   created: function() {
@@ -88,6 +97,7 @@ var app = new Vue({
       this.reveal_type = false;
       this.reveal_gender = false;
       this.reveal_gender_buttons = true;
+      this.bus.$emit('clear');
     }
   }
 });
