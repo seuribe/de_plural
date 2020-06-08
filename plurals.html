@@ -14,14 +14,14 @@
         Wort: <span class="original_word">{{word.singular}}</span><br>
         Typ: <span class="original_word" v-if="reveal_type">{{word.type}}</span><br>
         Genus: <span class="original_word" v-if="reveal_gender" v-bind:class="{ incorrect: (gender_guess != word.gender) }">{{word.gender}}</span>
-      <div v-if="reveal_gender_buttons">
+      <div class="genus_buttons" v-if="reveal_gender_buttons">
         <button v-on:click="checkGender('Maskulin');">Maskulin</button>
         <button v-on:click="checkGender('Feminin');">Feminin</button>
         <button v-on:click="checkGender('Neutrum');">Neutrum</button>
       </div>
     <br>
       <div class="row">
-        <div class="rowhead">.</div>
+        <div class="rowhead"></div>
         <div class="colhead">Singular</div>
         <div class="colhead">Plural</div>
       </div>
