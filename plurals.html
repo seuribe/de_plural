@@ -25,12 +25,12 @@
         <div class="colhead">Singular</div>
         <div class="colhead">Plural</div>
       </div>
-      <checked-case kasus="Nominativ" v-bind:conjugations="conjugations"></checked-case>
-      <checked-case kasus="Akkusativ" v-bind:conjugations="conjugations"></checked-case>
-      <checked-case kasus="Dativ" v-bind:conjugations="conjugations"></checked-case>
-      <checked-case kasus="Genitiv" v-bind:conjugations="conjugations"></checked-case>
+      <checked-case kasus="Nominativ" v-bind:conjugations="conjugations" v-bind:show="show_answers"></checked-case>
+      <checked-case kasus="Akkusativ" v-bind:conjugations="conjugations" v-bind:show="show_answers"></checked-case>
+      <checked-case kasus="Dativ" v-bind:conjugations="conjugations" v-bind:show="show_answers"></checked-case>
+      <checked-case kasus="Genitiv" v-bind:conjugations="conjugations" v-bind:show="show_answers"></checked-case>
       <div class="row button_bar">
-        <button v-on:click="check()">Prüfen</button>
+        <button v-on:click="check">Prüfen</button>
         <button v-on:click="newWord">Neues Wort!</button>
       </div>
   </div>

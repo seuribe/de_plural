@@ -27,18 +27,17 @@ Vue.component('checked-input', {
 });
 
 Vue.component('checked-case', {
-  props: ['kasus', 'conjugations'],
+  props: ['kasus', 'conjugations', 'show'],
   data: function() {
     return {
-      show: false
     }
   },
-  template: `<div class="row">
+  template:`<div class="row">
               <div class="rowhead">{{ kasus }}</div>
               <div class="inputcell"><checked-input v-bind:expected="conjugations['Singular'][kasus]" v-bind:show="show"></checked-input></div>
               <div class="inputcell"><checked-input v-bind:expected="conjugations['Plural'][kasus]" v-bind:show="show"></checked-input></div>
               <div class="buttoncell"><button v-on:click="show = !show">{{ (show ? "Hide" : "Check") }}</button></div>
-              </div>`
+            </div>`
 });
 
 var app = new Vue({
@@ -78,11 +77,14 @@ var app = new Vue({
 
       this.checkGender(this.word.gender);
       this.reveal_type = true;
+      this.show_answers = true;
+
     },
 
     newWord: function() {
       this.word = Dictionary[ Math.floor(Math.random() * Dictionary.length) ];
       this.conjugations = this.word.conjugations();
+      this.show_answers = false;
       this.reveal_type = false;
       this.reveal_gender = false;
       this.reveal_gender_buttons = true;
