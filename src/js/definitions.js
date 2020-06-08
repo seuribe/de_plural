@@ -1,24 +1,24 @@
 
-const Genders = Object.freeze({
-  Maskulin: 1,
-  Feminin: 2,
-  Neutrum: 3,
-  Plural: 4
+export const Genders = Object.freeze({
+  Maskulin: "Maskulin",
+  Feminin: "Feminin",
+  Neutrum: "Neutrum",
+  Plural: "Plural"
 });
 
-const Cases = Object.freeze({
-  Nominativ: 1,
-  Akkusativ: 2,
-  Dativ: 3,
-  Genitiv: 4
+export const Cases = Object.freeze({
+  Nominativ: "Nominativ",
+  Akkusativ: "Akkusativ",
+  Dativ: "Dativ",
+  Genitiv: "Genitiv"
 });
 
-const Plurality = Object.freeze({
-  Singular: 1,
-  Plural: 2
+export const Plurality = Object.freeze({
+  Singular: "Singular",
+  Plural: "Plural"
 });
 
-const DefiniteArticles = Object.freeze({
+export const DefiniteArticles = Object.freeze({
   [Genders.Maskulin]: {
     [Cases.Nominativ]: "der",
     [Cases.Akkusativ]: "den",
@@ -45,8 +45,7 @@ const DefiniteArticles = Object.freeze({
   }
 });
 
-
-const IndefiniteArticles = Object.freeze({
+export const IndefiniteArticles = Object.freeze({
   [Genders.Maskulin]: {
     [Cases.Nominativ]: "ein",
     [Cases.Akkusativ]: "einen",
@@ -73,15 +72,15 @@ const IndefiniteArticles = Object.freeze({
   }
 });
 
-function definiteArticle(gender, kasus) {
+export function definiteArticle(gender, kasus) {
   return DefiniteArticles[gender][kasus];
 }
 
-function indefiniteArticle(gender, kasus) {
+export function indefiniteArticle(gender, kasus) {
   return IndefiniteArticles[gender][kasus];
 }
 
-class Noun {
+export class Noun {
   constructor(singular, plural, gender, type, exceptions = []) {
     this.singular = singular;
     this.plural = plural;
@@ -150,13 +149,13 @@ class Noun {
   }
 }
 
-const AdjektivDeclensionType = Object.freeze({
+export const AdjektivDeclensionType = Object.freeze({
   Bestimmter: 1,
   Unbestimmter: 2,
   Ohne: 3
 });
 
-const AdjektivDeclensionPostFix = Object.freeze({
+export const AdjektivDeclensionPostFix = Object.freeze({
   [AdjektivDeclensionType.Bestimmter]: {
     [Cases.Nominativ]: {
       [Genders.Maskulin]: "e", [Genders.Feminin]: "e", [Genders.Neutrum]: "e", [Genders.Plural]: "en"
@@ -201,7 +200,7 @@ const AdjektivDeclensionPostFix = Object.freeze({
   },
 });
 
-class Adjektiv {
+export class Adjektiv {
   constructor(rootForm) {
     this.rootForm = rootForm;
   }

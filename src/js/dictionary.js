@@ -1,5 +1,6 @@
+import { Noun, Genders, Cases, Adjektiv } from './definitions';
 
-const Dictionary = [
+export const Dictionary = [
   new Noun("Bus", "Busse", [Genders.Maskulin], 1),
   new Noun("Zimmer", "Zimmer", Genders.Neutrum, 1),
   new Noun("Tür", "Türen", Genders.Feminin, 2),
@@ -78,8 +79,8 @@ function createAdjectives() {
   return Array.from(arguments).map( rootForm => new Adjektiv(rootForm) );
 }
 
-const Adjectives = createAdjectives("groß", "schön", "heiß", "neu", "gut", "schlecht");
+export const Adjectives = createAdjectives("groß", "schön", "heiß", "neu", "gut", "schlecht");
 
-function randomAdjective() {
+export function randomAdjective() {
   return Adjectives[Math.floor(Math.random() * Adjectives.length)];
 }

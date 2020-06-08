@@ -3,22 +3,22 @@
   <head>
     <title>Konjugationen und Plural</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="default.css" media="all" type="text/css">
+    <link rel="stylesheet" href="css/default.css" media="all" type="text/css">
   </head>
   <body>
-    <script src="definitions.js"></script>
-    <script src="dictionary.js"></script>
-    <script src="plurals.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <div id="app">
+
     <div id="main">
       <h1>Konjugationen und Plural</h1>
-      Wort: <span class="original_word" id="word"></span><br>
-    Typ: <span class="original_word" id="type"></span><br>
-    Genus: <span class="original_word" id="genus"></span>
-    <div id="genus_buttons">
-      <button onclick="checkGender(Genders.Maskulin);">Maskuline</button>
-      <button onclick="checkGender(Genders.Feminin);">Feminin</button>
-      <button onclick="checkGender(Genders.Neutrum);">Neutrum</button>
-    </div>
+        Wort: <span class="original_word">{{word.singular}}</span><br>
+        Typ: <span class="original_word" v-if="reveal_type">{{word.type}}</span><br>
+        Genus: <span class="original_word" v-if="reveal_gender" v-bind:class="{ incorrect: (gender_guess != word.gender) }">{{word.gender}}</span>
+      <div v-if="reveal_gender_buttons">
+        <button v-on:click="checkGender('Maskulin');">Maskulin</button>
+        <button v-on:click="checkGender('Feminin');">Feminin</button>
+        <button v-on:click="checkGender('Neutrum');">Neutrum</button>
+      </div>
     <br>
     <table>
       <thead>
@@ -56,17 +56,14 @@
     <tfoot>
       <tr>
         <td class="button_bar" colspan="4">
-          <button onclick="check(Object.values(Cases))">Prüfen</button>
-          <button onclick="newWord()">Neues Wort!</button>
+          <button v-on:click="check()">Prüfen</button>
+          <button v-on:click="newWord">Neues Wort!</button>
         </td>
       </tr>
     </tfoot>
     </table>
-  <script>
-
-    newWord();
-
-  </script>
   </div>
-  </body>
+  </div>
+  <script src="js/main.js"></script>
+</body>
 </html>
