@@ -11,7 +11,7 @@
   color: rgb(187, 0, 0);
 }
 
-#genus_buttons {
+.genus_buttons {
   display: inline;
 }
 
@@ -31,6 +31,7 @@
 .colhead {
   width: 20%;
   font-weight: bold;
+  text-align: center;
 }
 
 .inputcell {
