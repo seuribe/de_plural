@@ -12,6 +12,35 @@ const NumberPostfix = {
   [Plurality.Plural]: "plural"
 };
 
+Vue.component('checked-input', {
+  props: ['expected', 'show'],
+  data: function() {
+    return {
+      input: "",
+    }
+  },
+  template: `<div>
+               <input v-model="input" type="text"></input>
+               <span v-if="show" v-bind:class="{ incorrect: (input != expected) }">{{expected}}</span>
+             </div>`
+
+});
+
+Vue.component('checked-case', {
+  props: ['kasus', 'conjugations'],
+  data: function() {
+    return {
+      show: false
+    }
+  },
+  template: `<div class="row">
+              <div class="rowhead">{{ kasus }}</div>
+              <div class="inputcell"><checked-input v-bind:expected="conjugations['Singular'][kasus]" v-bind:show="show"></checked-input></div>
+              <div class="inputcell"><checked-input v-bind:expected="conjugations['Plural'][kasus]" v-bind:show="show"></checked-input></div>
+              <div class="buttoncell"><button v-on:click="show = !show">{{ (show ? "Hide" : "Check") }}</button></div>
+              </div>`
+});
+
 var app = new Vue({
   el: "#app",
   data: {
@@ -20,7 +49,7 @@ var app = new Vue({
     type: "",
     gender_guess: "",
     gender: "",
-    answers: {},
+    show_answers: false,
     reveal_type: false,
     reveal_gender: false,
     reveal_gender_buttons: true
@@ -31,27 +60,6 @@ var app = new Vue({
   },
 
   methods: {
-    checkAnswer: function(kasus, number) {
-      const inputId = CasePrefix[kasus] + "_" + NumberPostfix[number];
-      const userInput = document.getElementById(inputId).value;
-      const answer = this.conjugations[number][kasus];
-      const answerField = document.getElementById(inputId + "_answer");
-  
-      answerField.innerText = answer;
-      if (answer != userInput)
-        answerField.classList.add("incorrect");
-      else
-        answerField.classList.remove("incorrect");
-      },
-
-    clearConjugation: function(kasus, number) {
-      const inputId = CasePrefix[kasus] + "_" + NumberPostfix[number];
-      const answerField = document.getElementById(inputId + "_answer");
-      document.getElementById(inputId).value = "";
-      answerField.innerText = "";
-      answerField.classList.remove("incorrect");
-    },
-
     genderName: function(gender) {
       return (gender == Genders.Feminin) ? "Feminin" :
               (gender == Genders.Maskulin) ? "Maskulin":
@@ -68,11 +76,6 @@ var app = new Vue({
       if (kasusList == null)
         kasusList = Object.values(Cases);
 
-      for (const kasus of kasusList) {
-        for (const number of Object.values(Plurality)) {
-          this.checkAnswer(kasus, number);
-        }
-      }
       this.checkGender(this.word.gender);
       this.reveal_type = true;
     },
@@ -83,12 +86,6 @@ var app = new Vue({
       this.reveal_type = false;
       this.reveal_gender = false;
       this.reveal_gender_buttons = true;
-
-      for (const kasus of Object.values(Cases)) {
-        for (const number of Object.values(Plurality)) {
-          this.clearConjugation(kasus, number);
-        }
-      }
     }
   }
 });

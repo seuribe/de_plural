@@ -20,48 +20,19 @@
         <button v-on:click="checkGender('Neutrum');">Neutrum</button>
       </div>
     <br>
-    <table>
-      <thead>
-        <tr>
-          <th></th><th>Singular</th><th>Plural</th>
-        </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>Nominative</td><td><input id="nom_singular" type="text"></td><td><input id="nom_plural" type="text"></td>
-        <td><button onclick="check([Cases.Nominativ]);">Check</button></td>
-      </tr>
-      <tr>
-        <td></td><td><span id="nom_singular_answer"></span></td><td><span id="nom_plural_answer"></span></td>
-      </tr>
-      <tr>
-        <td>Akkusativ</td><td><input id="akk_singular" type="text"></td><td><input id="akk_plural" type="text"></td>
-      </tr>
-      <tr>
-        <td></td><td><span id="akk_singular_answer"></span></td><td><span id="akk_plural_answer"></span></td>
-      </tr>
-      <tr>
-        <td>Dativ</td><td><input id="dat_singular" type="text"></td><td><input id="dat_plural" type="text"></td>
-      </tr>
-      <tr>
-        <td></td><td><span id="dat_singular_answer"></span></td><td><span id="dat_plural_answer"></span></td>
-      </tr>
-      <tr>
-        <td>Genitiv</td><td><input id="gen_singular" type="text"></td><td><input id="gen_plural" type="text"></td>
-      </tr>
-      <tr>
-        <td></td><td><span id="gen_singular_answer"></span></td><td><span id="gen_plural_answer"></span></td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td class="button_bar" colspan="4">
-          <button v-on:click="check()">Prüfen</button>
-          <button v-on:click="newWord">Neues Wort!</button>
-        </td>
-      </tr>
-    </tfoot>
-    </table>
+      <div class="row">
+        <div class="rowhead">.</div>
+        <div class="colhead">Singular</div>
+        <div class="colhead">Plural</div>
+      </div>
+      <checked-case kasus="Nominativ" v-bind:conjugations="conjugations"></checked-case>
+      <checked-case kasus="Akkusativ" v-bind:conjugations="conjugations"></checked-case>
+      <checked-case kasus="Dativ" v-bind:conjugations="conjugations"></checked-case>
+      <checked-case kasus="Genitiv" v-bind:conjugations="conjugations"></checked-case>
+      <div class="row button_bar">
+        <button v-on:click="check()">Prüfen</button>
+        <button v-on:click="newWord">Neues Wort!</button>
+      </div>
   </div>
   </div>
   <script src="js/main.js"></script>
