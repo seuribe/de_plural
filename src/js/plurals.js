@@ -1,5 +1,9 @@
+import Vue from 'vue';
+
 import { Genders, Cases, Plurality } from './definitions';
 import { Dictionary } from './dictionary';
+
+import './checked-input';
 
 const CasePrefix = {
   [Cases.Nominativ]: "nom",
@@ -11,28 +15,6 @@ const NumberPostfix = {
   [Plurality.Singular]: "singular",
   [Plurality.Plural]: "plural"
 };
-
-Vue.component('checked-input', {
-  props: ['expected', 'show', 'bus'],
-  data: function() {
-    return {
-      input: "",
-    }
-  },
-  methods: {
-    clear: function() {
-      this.input = "";
-    }
-  },
-  mounted() {
-    this.bus.$on('clear', this.clear);
-  },
-  template: `<div>
-               <input v-model="input" type="text"></input>
-               <span v-if="show" v-bind:class="{ incorrect: (input != expected) }">{{expected}}</span>
-             </div>`
-
-});
 
 Vue.component('checked-case', {
   props: ['kasus', 'conjugations', 'show', 'bus'],
