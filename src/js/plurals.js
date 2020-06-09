@@ -1,20 +1,9 @@
 import Vue from 'vue';
 
-import { Genders, Cases, Plurality } from './definitions';
+import { Genders } from './definitions';
 import { Dictionary } from './dictionary';
 
 import './checked-input';
-
-const CasePrefix = {
-  [Cases.Nominativ]: "nom",
-  [Cases.Akkusativ]: "akk",
-  [Cases.Dativ]: "dat",
-  [Cases.Genitiv]: "gen"
-};
-const NumberPostfix = {
-  [Plurality.Singular]: "singular",
-  [Plurality.Plural]: "plural"
-};
 
 Vue.component('checked-case', {
   props: ['kasus', 'conjugations', 'show', 'bus'],

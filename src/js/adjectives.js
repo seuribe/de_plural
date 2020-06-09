@@ -1,22 +1,9 @@
 import Vue from 'vue';
 
-import { Genders, Cases, AdjektivDeclensionType } from './definitions';
+import { AdjektivDeclensionType } from './definitions';
 import { randomAdjective } from './dictionary';
 
 import './checked-input';
-
-const CasePrefix = {
-  [Cases.Nominativ]: "nom",
-  [Cases.Akkusativ]: "akk",
-  [Cases.Dativ]: "dat",
-  [Cases.Genitiv]: "gen"
-};
-const GenderPostfix = {
-  [Genders.Maskulin]: "mas",
-  [Genders.Feminin]: "fem",
-  [Genders.Neutrum]: "neu",
-  [Genders.Plural]: "plu"
-};
 
 Vue.component('deklination-adjectiv-row', {
   props: ['kasus', 'declensions', 'show', 'bus'],
