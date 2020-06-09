@@ -155,6 +155,11 @@ export const AdjektivDeclensionType = Object.freeze({
   Ohne: 'Ohne'
 });
 
+export function randomAdjectiveDeclentionType() {
+  const types = Object.keys(AdjektivDeclensionType);
+  return types[Math.floor(Math.random() * types.length)];
+}
+
 export const AdjektivDeclensionPostFix = Object.freeze({
   [AdjektivDeclensionType.Bestimmter]: {
     [Cases.Nominativ]: {

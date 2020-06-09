@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-import { AdjektivDeclensionType } from './definitions';
+import { randomAdjectiveDeclentionType } from './definitions';
 import { randomAdjective } from './dictionary';
 
 import './checked-input';
@@ -35,14 +35,9 @@ var app = new Vue({
     this.newWord();
   },
   methods: {
-    randomAdjectiveDeclentionType: function() {
-      const types = Object.keys(AdjektivDeclensionType);
-      return types[Math.floor(Math.random() * types.length)];
-    },
-
     newWord: function() {
       this.adjective = randomAdjective();
-      this.declensionType = this.randomAdjectiveDeclentionType();
+      this.declensionType = randomAdjectiveDeclentionType();
       this.declensions = this.adjective.declensions()[this.declensionType];
       this.show_answers = false;
       this.bus.$emit('clear');
