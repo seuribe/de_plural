@@ -62,10 +62,7 @@ var app = new Vue({
       this.reveal_gender_buttons = false;
     },
 
-    check: function(kasusList = null) {
-      if (kasusList == null)
-        kasusList = Object.values(Cases);
-
+    check: function() {
       this.checkGender(this.word.gender);
       this.reveal_type = true;
       this.show_answers = true;
