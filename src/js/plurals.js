@@ -1,6 +1,5 @@
 import Vue from 'vue';
 
-import { Genders } from './definitions';
 import { Dictionary } from './dictionary';
 
 import './checked-input';
@@ -39,12 +38,6 @@ var app = new Vue({
   },
 
   methods: {
-    genderName: function(gender) {
-      return (gender == Genders.Feminin) ? "Feminin" :
-              (gender == Genders.Maskulin) ? "Maskulin":
-              "Neutrum";
-    },
-
     checkGender: function(gender) {
       this.gender_guess = gender;
       this.reveal_gender = true;
