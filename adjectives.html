@@ -3,59 +3,33 @@
   <head>
     <title>Deklination der Adjektive</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="default.css" media="all" type="text/css">
+    <link rel="stylesheet" href="css/default.css" media="all" type="text/css">
   </head>
   <body>
-    <script src="definitions.js"></script>
-    <script src="dictionary.js"></script>
-    <script src="adjectives.js"></script>
-    <script>
-      function addRow(tag, name, prefix, postfix, values) {
-        document.write(`<tr><td>${name}</td>`);
-          for (const value of values) {
-          document.write(`<td><${tag} id="${prefix}${value}${postfix}" type="text"></${tag}></td>`);
-        }
-        document.write("</tr>");
-      }
-
-      function addCaseRow(name, prefix) {
-        const postfixes = Object.values(Genders).map( gender => GenderPostfix[gender] );
-        addRow("input", name, prefix+"_", "", postfixes);
-        addRow("span", "", prefix+"_", "_answer", postfixes);
-      }
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <div id="adjektivApp">
     <div id="main">
       <h1>Deklination der Adjektive</h1>
-      Adjektiv: <span class="original_word" id="adjective"></span><br>
-      Type: <span class="original_word" id="type"></span><br>
+      Adjektiv: <span class="original_word">{{adjective.rootForm}}</span><br>
+      Deklinationstyp: <span class="original_word">{{declensionType}}</span><br>
     <br>
-    <table>
-      <thead>
-        <tr>
-          <th></th><th>Maskulin</th><th>Feminin</th><th>Neutrum</th><th>Plural</th>
-        </tr>
-      </thead>
-      <tbody>
-      <script>
-        addCaseRow("Nominativ", "nom");
-        addCaseRow("Akkusativ", "akk");
-        addCaseRow("Dativ", "dat");
-        addCaseRow("Genitiv", "gen");
-      </script>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td class="button_bar" colspan="5">
-          <button onclick="check(Object.values(Cases))">Prüfen</button>
-          <button onclick="newWord()">Neues Wort!</button>
-        </td>
-      </tr>
-    </tfoot>
-    </table>
-  <script>
-    newWord();
-  </script>
+    <div class="row">
+      <div class="rowhead"></div>
+      <div class="colhead">Maskulin</div>
+      <div class="colhead">Feminin</div>
+      <div class="colhead">Neutrum</div>
+      <div class="colhead">Plural</div>
+    </div>
+    <deklination-adjectiv-row kasus="Nominativ" v-bind:bus="bus" v-bind:declensions="declensions" v-bind:show="show_answers"></deklination-adjectiv-row>
+    <deklination-adjectiv-row kasus="Akkusativ" v-bind:bus="bus" v-bind:declensions="declensions" v-bind:show="show_answers"></deklination-adjectiv-row>
+    <deklination-adjectiv-row kasus="Dativ" v-bind:bus="bus" v-bind:declensions="declensions" v-bind:show="show_answers"></deklination-adjectiv-row>
+    <deklination-adjectiv-row kasus="Genitiv" v-bind:bus="bus" v-bind:declensions="declensions" v-bind:show="show_answers"></deklination-adjectiv-row>
+    <div class="row button_bar">
+      <button v-on:click="check">Prüfen</button>
+      <button v-on:click="newWord">Neues Wort!</button>
+    </div>
   </div>
+  </div>
+  <script src="js/adjectives.js"></script>
   </body>
 </html>

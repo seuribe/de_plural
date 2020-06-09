@@ -150,9 +150,9 @@ export class Noun {
 }
 
 export const AdjektivDeclensionType = Object.freeze({
-  Bestimmter: 1,
-  Unbestimmter: 2,
-  Ohne: 3
+  Bestimmter: 'Bestimmter',
+  Unbestimmter: 'Unbestimmter',
+  Ohne: 'Ohne'
 });
 
 export const AdjektivDeclensionPostFix = Object.freeze({

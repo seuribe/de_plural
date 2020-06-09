@@ -1,7 +1,9 @@
+import Vue from 'vue';
 
-var adjective;
-var declensions;
-var type;
+import { Genders, Cases, AdjektivDeclensionType } from './definitions';
+import { randomAdjective } from './dictionary';
+
+import './checked-input';
 
 const CasePrefix = {
   [Cases.Nominativ]: "nom",
@@ -16,52 +18,51 @@ const GenderPostfix = {
   [Genders.Plural]: "plu"
 };
 
-function checkAnswer(type, kasus, gender) {
-  const inputId = CasePrefix[kasus] + "_" + GenderPostfix[gender];
-  const userInput = document.getElementById(inputId).value;
-  const answer = declensions[type][kasus][gender];
-  const answerField = document.getElementById(inputId + "_answer");
+Vue.component('deklination-adjectiv-row', {
+  props: ['kasus', 'declensions', 'show', 'bus'],
+  data: function() {
+    return {
+    }
+  },
+  template:`<div class="row">
+              <div class="rowhead">{{ kasus }}</div>
+              <div class="inputcell"><checked-input v-bind:bus="bus" v-bind:expected="declensions[kasus]['Maskulin']" v-bind:show="show"></checked-input></div>
+              <div class="inputcell"><checked-input v-bind:bus="bus" v-bind:expected="declensions[kasus]['Feminin']" v-bind:show="show"></checked-input></div>
+              <div class="inputcell"><checked-input v-bind:bus="bus" v-bind:expected="declensions[kasus]['Neutrum']" v-bind:show="show"></checked-input></div>
+              <div class="inputcell"><checked-input v-bind:bus="bus" v-bind:expected="declensions[kasus]['Plural']" v-bind:show="show"></checked-input></div>
+              <div class="buttoncell"><button v-on:click="show = !show">{{ (show ? "Hide" : "Check") }}</button></div>
+            </div>`
 
-  answerField.innerText = answer;
-  if (answer != userInput)
-    answerField.classList.add("incorrect");
-  else
-    answerField.classList.remove("incorrect");
-}
+});
 
-function clearConjugation(kasus, gender) {
-  const inputId = CasePrefix[kasus] + "_" + GenderPostfix[gender];
-  const answerField = document.getElementById(inputId + "_answer");
-  document.getElementById(inputId).value = "";
-  answerField.innerText = "";
-  answerField.classList.remove("incorrect");
-}
+var app = new Vue({
+  el: "#adjektivApp",
+  data: {
+    adjective: "",
+    declensions: "",
+    declensionType: "",
+    show_answers: false,
+    bus: new Vue()
+  },
+  created: function() {
+    this.newWord();
+  },
+  methods: {
+    randomAdjectiveDeclentionType: function() {
+      const types = Object.keys(AdjektivDeclensionType);
+      return types[Math.floor(Math.random() * types.length)];
+    },
 
-function check(kasusList) {
-  for (const kasus of kasusList) {
-    for (const gender of Object.values(Genders)) {
-      checkAnswer(AdjektivDeclensionType[type], kasus, gender);
+    newWord: function() {
+      this.adjective = randomAdjective();
+      this.declensionType = this.randomAdjectiveDeclentionType();
+      this.declensions = this.adjective.declensions()[this.declensionType];
+      this.show_answers = false;
+      this.bus.$emit('clear');
+    },
+
+    check: function() {
+      this.show_answers = true;
     }
   }
-}
-
-function randomAdjectiveDeclentionType() {
-  const types = Object.keys(AdjektivDeclensionType);
-  return types[Math.floor(Math.random() * types.length)];
-}
-
-function newWord() {
-  adjective = randomAdjective();
-  declensions = adjective.declensions();
-  type = randomAdjectiveDeclentionType();
- 
-  document.getElementById("adjective").innerText = adjective.rootForm;
-  document.getElementById("type").innerText = type;
-
-  for (const kasus of Object.values(Cases)) {
-    for (const gender of Object.values(Genders)) {
-      clearConjugation(kasus, gender);
-    }
-  }
-}
-
+});
