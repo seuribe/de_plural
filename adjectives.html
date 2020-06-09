@@ -20,10 +20,9 @@
       <div class="colhead">Neutrum</div>
       <div class="colhead">Plural</div>
     </div>
-    <deklination-adjectiv-row kasus="Nominativ" v-bind:bus="bus" v-bind:declensions="declensions" v-bind:show="show_answers"></deklination-adjectiv-row>
-    <deklination-adjectiv-row kasus="Akkusativ" v-bind:bus="bus" v-bind:declensions="declensions" v-bind:show="show_answers"></deklination-adjectiv-row>
-    <deklination-adjectiv-row kasus="Dativ" v-bind:bus="bus" v-bind:declensions="declensions" v-bind:show="show_answers"></deklination-adjectiv-row>
-    <deklination-adjectiv-row kasus="Genitiv" v-bind:bus="bus" v-bind:declensions="declensions" v-bind:show="show_answers"></deklination-adjectiv-row>
+    <div v-for="kasus in ['Nominativ', 'Akkusativ', 'Dativ', 'Genitiv']">
+      <deklination-adjectiv-row v-bind:kasus="kasus" v-bind:bus="bus" v-bind:declensions="declensions" v-bind:show="show_answers"></deklination-adjectiv-row>  
+    </div>
     <div class="row button_bar">
       <button v-on:click="check">Prüfen</button>
       <button v-on:click="newWord">Neues Wort!</button>
