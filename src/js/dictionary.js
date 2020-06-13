@@ -16,7 +16,7 @@ export const Dictionary = [
   new Noun("Wort", "Wörter", Genders.Neutrum, 4),
   new Noun("Messe", "Messen", Genders.Feminin, 2),
   new Noun("Spiel", "Spiele", Genders.Neutrum, 1),
-    
+
   new Noun("Anlage", "Anlagen", Genders.Feminin, 2),
   new Noun("Welle", "Wellen", Genders.Feminin, 2),
   new Noun("Messer", "Messer", Genders.Neutrum, 1),
@@ -72,6 +72,9 @@ export const Dictionary = [
   new Noun("Blau", "Blau", Genders.Neutrum, 6),
   new Noun("Spanisch", "Spanisch", Genders.Neutrum, 6),
   
+  new Noun("Ziel", "Ziele", Genders.Neutrum, 1),
+  new Noun("Grund", "Gründe", Genders.Maskulin, 1),
+
 
 ];
 
