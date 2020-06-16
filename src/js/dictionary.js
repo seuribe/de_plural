@@ -56,7 +56,7 @@ export const Dictionary = [
   new Noun("Bär", "Bären", Genders.Maskulin, 1),
   new Noun("Wal", "Wale", Genders.Maskulin, 1),
   new Noun("Faden", "Fäden", Genders.Maskulin, 1),
-  new Noun("Schere", "Scheren", Genders.Feminin, 1),
+  new Noun("Schere", "Scheren", Genders.Feminin, 2),
   new Noun("Stein", "Steine", Genders.Neutrum, 1),
   new Noun("Zug", "Züge", Genders.Maskulin, 1),
   new Noun("Fehler", "Fehler", Genders.Maskulin, 1),
